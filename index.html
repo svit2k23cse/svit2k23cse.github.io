@@ -69,12 +69,12 @@
       
   <div class="field mt-3">
     <label for="name" class="form-label fw-bold">Name *</label>
-    <input class="form-control" placeholder="Enter your name" type="text" name="name" id="rsmw_name">
+    <input class="form-control" placeholder="Enter your name" type="text" name="name" id="rsmw_name" required="required" />
   </div>
 
   <div class="field mt-3">
     <label for="phone_number" class="form-label fw-bold">Phone Number *</label>
-    <input id="phone_number" class="form-control" placeholder="Enter your phone number" type="text" name="phone_number">
+    <input id="phone_number" class="form-control" placeholder="Enter your phone number" type="text" name="phone_number" required="required" />
   </div>
 
   <div class="field mt-3">
@@ -95,7 +95,7 @@
 
   <div class="field mt-3">
     <label for="district" class="form-label fw-bold">District *</label>
-    <select class="form-select" name="district" id="rsmw_district"><option value="">Select district...</option>
+    <select class="form-select" name="district" id="rsmw_district" required="required" /><option value="" >Select district...</option>
 <option value="Ananthapur">Ananthapur</option>
 <option value="Annamayya">Annamayya</option>
 <option value="Kadapa">Kadapa</option>
@@ -106,7 +106,7 @@
 
   <div class="field mt-3">
     <label for="assembly_constituency" class="form-label fw-bold">Assembly Constituency *</label>
-    <select class="form-select" name="assembly_constituency" id="rsmw_assembly_constituency">
+    <select class="form-select" name="assembly_constituency" id="rsmw_assembly_constituency" required="required" />
     <option value="">Select Assembly...</option>
       <option value="Adoni" data-value="kurnool">Adoni</option>
       <option value="Allagadda" data-value="Nandyal">Allagadda</option>
@@ -154,7 +154,7 @@
 
   <div class="field mt-3">
     <label for="village_name" class="form-label fw-bold">Village Name *</label>
-    <input class="form-control" placeholder="Enter your village" type="text" name="village_name" id="rsmw_village_name">
+    <input class="form-control" placeholder="Enter your village" type="text" name="village_name" id="rsmw_village_name" required="required" />
   </div>
 
   <div class="field mt-3">
@@ -277,23 +277,22 @@
 <script>
 
 
-    $(document).ready(function () {
+  $(document).ready(function () {
 
     $("#btnSubmit").click(function (event) {
  
         //stop submit the form, we will post it manually.
-        event.preventDefault();
+      event.preventDefault();
  
         // Get form
-        var data = $('#myform').serializeArray().reduce(function(obj, item) {
-            obj[item.name] = item.value;
-            return obj;
-        }, {}); 
-       // Create an FormData object 
-        // console.log(data);
-       // If you want to add an extra field for the FormData
- 
-       // disabled the submit button
+      var data = $('#myform').serializeArray().reduce(function(obj, item) {
+          obj[item.name] = item.value;
+          return obj;
+      }, {}); 
+
+      if(data.name == '' || data.phone_number == '' || data.district == '' || data.assembly_constituency == '' || data.village_name == ''){
+          alert("Name, phone number, District, Assemly, Village are mandatory");
+      }else{
         $("#btnSubmit").prop("disabled", true);
 
         var myHeaders = new Headers();
@@ -318,6 +317,8 @@
 
         $("#btnSubmit").prop("disabled", false);
         alert("congratulations you are successfully enrolled as ravanna warriour");
+        window.location.reload();
+      }
     });
   });
 
